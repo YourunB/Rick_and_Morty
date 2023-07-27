@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="wrapper" id="wrapper">
+
+    <div class="face reveal">
+      <img src="assets/img/face1.png" alt="face" title="Click to start">
+      <p>&copy; 2023 All content is created for educational purposes. The image & music is used by their cartoon.</p>
+    </div>
+
+    <div class="change-load unvisible" id="changeLoad">
+      <h4>Select how many cards show:</h4>
+      <img src="assets/img/20-cards.jpg" id="btn20" title="Show 20 cards" alt="cartoon image">
+      <img src="assets/img/all-cards.jpg" id="btnAll" title="Show all cards" alt="cartoon image">
+    </div>
+
+    <div class="dance unvisible">
+      <img src="assets/img/dance.gif" alt="dance Morty">
+      <div class="dance__loading">
+        <div class="dance__loading_load"></div>
+      </div>
+    </div>
+
+    <div class="character unvisible" id="character">
+      <img id="characterImg" src="" alt="character image">
+      <div class="character__info">
+        <div class="character__info_description">
+          <h4>Name:</h4>
+          <p id="name"></p>
+          <h4>Status:</h4>
+          <p id="status"></p>
+          <h4>Species:</h4>
+          <p id="species"></p>
+          <h4>Episode:</h4>
+          <p id="episode"></p>
+        </div>
+        <div class="character__info_description">
+          <h4>Origin:</h4>
+          <p id="origin"></p>
+          <h4>Location:</h4>
+          <p id="locat"></p>
+          <h4>Gender:</h4>
+          <p id="gender"></p>
+        </div>
+      </div>
+    </div>
+
+     <a href="#" id="goUp" class="go-up unvisible" ><img id="goUpImg" src="assets/img/scroll_top1.png" title="Go up" alt="up"></a>
+    <img class="music-btn unvisible" id="btnMusic" src="assets/svg/music-on.svg" alt="icon volume" title="Music on/off">
+  </div>
+
+  <audio src="assets/audio/check.mp3" id="check"></audio>
+  <audio src="assets/audio/promo.mp3" id="promo"></audio>
+  <audio src="assets/audio/original-song.mp3" id="music" loop="true"></audio>
+  <audio src="assets/audio/up.mp3" id="up"></audio>
+
+  <script src="scripts/script.js"></script>
+  <script src="scripts/jquery-1.11.0.min.js"></script>
+  <script src="scripts/jquery-migrate-1.2.1.min.js"></script>
+  <script src="scripts/scrollreveal.js"></script>
+  <script src="scripts/scripts-for-scrollreveal.js"></script>
+    
+</body>
+</html>
