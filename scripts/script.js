@@ -14,19 +14,46 @@
     let goUpImg = document.getElementById("goUpImg");
     let changeLoad = document.getElementById("changeLoad");
     let btnMusic = document.getElementById("btnMusic");
+    let eye = document.getElementsByClassName("eye")[0];
 
-    document.getElementsByTagName("img")[0].addEventListener("mouseover", () => {
-      document.getElementsByTagName("img")[0].src = "assets/img/face2.png"
+    let anim = {
+      delay: 100,
+      distance: '200px',
+      duration: 500,
+      easing: 'ease-in-out',
+      rotate: { z: 10 }, 
+      scale: 0.8, 
+      mobile: true,
+      reset: true,
+    };
+
+    eye.addEventListener("click", ()=>{
+      eye.classList.add("unvisible");
+      loading();
+      setInterval( () => {
+        add();
+      },100);
+    });
+
+    let logo = document.getElementsByClassName("logo")[0];
+    logo.addEventListener("click", () => {
+      logo.classList.add("unvisible");
+      document.getElementById('tsss').play();
+      document.getElementsByClassName("face")[0].classList.remove("unvisible");
+    });
+
+    document.getElementsByTagName("img")[4].addEventListener("mouseover", () => {
+      document.getElementsByTagName("img")[4].src = "assets/img/face2.png"
       audioCheck();
     });
 
-    document.getElementsByTagName("img")[0].addEventListener("mouseout", () => {
-      document.getElementsByTagName("img")[0].src = "assets/img/face1.png"
+    document.getElementsByTagName("img")[4].addEventListener("mouseout", () => {
+      document.getElementsByTagName("img")[4].src = "assets/img/face1.png"
       audioCheck();
     });
 
-    document.getElementsByTagName("img")[0].addEventListener("click", () => {
-      document.getElementsByTagName("img")[0].src = "assets/img/face3.png";
+    document.getElementsByTagName("img")[4].addEventListener("click", () => {
+      document.getElementsByTagName("img")[4].src = "assets/img/face3.png";
       audioCheck();
       btnMusic.classList.remove("unvisible");
       document.getElementById('promo').play();
@@ -34,9 +61,11 @@
       setTimeout(() => {
         document.getElementsByClassName("face")[0].classList.add("unvisible");
         document.getElementsByClassName("dance")[0].classList.remove("unvisible");
+        document.getElementsByClassName("rick")[0].classList.remove("unvisible");
+        document.getElementsByClassName("morty")[0].classList.remove("unvisible");
       }, 1000);
 
-      setTimeout(()=>{
+      setTimeout(()=> {
         document.getElementsByClassName("dance")[0].classList.add("unvisible");
         changeLoad.classList.remove("unvisible")
 
@@ -47,6 +76,11 @@
           changeLoad.classList.add("unvisible")
           wrapper.classList.remove("unvisible");
           document.getElementById('music').play();
+          document.body.classList.add("back-img");
+          document.getElementsByClassName("rick")[0].classList.add("unvisible");
+          document.getElementsByClassName("morty")[0].classList.add("unvisible");
+          eye.classList.remove("unvisible");
+          scroll();
           add();
         });
 
@@ -54,17 +88,44 @@
           changeLoad.classList.add("unvisible")
           wrapper.classList.remove("unvisible");
           document.getElementById('music').play();
-          for (let i = 0; i <= maxPage; i++) { add(); }
+          document.body.classList.add("back-img");
+          document.getElementsByClassName("rick")[0].classList.add("unvisible");
+          document.getElementsByClassName("morty")[0].classList.add("unvisible");
+          loading();
+          setInterval( () => {
+            add();
+          },100);
+          scroll();
         });
 
-      }, 15000);
+      }, 1000); //15000
     });
+
+    
+    function loading() {
+      document.body.classList.add("wait");
+      document.getElementsByClassName("load")[0].classList.remove("unvisible");
+    }
     
 
     function add() {
-      if (page < maxPage) {
+      if (page <= maxPage) {
         create(page);
         page = page + 1;
+        if (page > maxPage) {
+          setTimeout(()=>{ 
+            document.body.classList.remove("wait");
+            document.getElementsByClassName("load")[0].classList.add("unvisible");
+          }, 2000);
+
+          let cards = document.getElementsByClassName("card");
+          for (let i = 0; i < cards.length; i++) { 
+            cards[i].classList.remove("animation");
+            cards[i].classList.add("reveal"); 
+          }
+          window.sr = ScrollReveal().reveal( '.reveal', anim );
+        }
+
       } else return;
     }
 
@@ -80,6 +141,7 @@
           wrapper.append(document.createElement("div"));
           document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].id = "id" + data.results[i].id;
           document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].classList = "card";
+          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].classList.add("animation");
 
           document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].append(document.createElement("img"));
           document.getElementsByTagName("img")[document.getElementsByTagName("img").length - 1].src = data.results[i].image;
@@ -87,9 +149,11 @@
 
           document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].append(document.createElement("h3"));
           document.getElementsByTagName("h3")[document.getElementsByTagName("h3").length - 1].textContent = data.results[i].name;
+
+          //console.log(data.results[i].id);
         }
       }
-      request.send()
+      request.send();
     }
 
 
@@ -113,30 +177,51 @@
         else character.style.left = "auto";
 
         character.classList.remove("unvisible");
-        setTimeout(() => goTo(), 1000);
+        //console.log("Позиция эл-та: " + posY);
+        //console.log("Выстоа экрана: " + window.screen.height);
+        if (posY <= 0 || posY >= window.screen.height - 300) setTimeout(() => goTo(), 1000);
       }
       request.send();
     }
 
-    window.addEventListener("scroll",() => {
-      if (window.scrollY > 200) {
-        goUp.classList.remove("unvisible");
-      } else {
-        goUp.classList.add("unvisible");
+    
+    function throttle(callee, timeout) {
+      let timer = null
+    
+      return function perform(...args) {
+        if (timer) return
+    
+        timer = setTimeout(() => {
+          callee(...args)
+    
+          clearTimeout(timer)
+          timer = null
+        }, timeout)
       }
+    }
+    
 
-      let pageSize = document.body.clientHeight;
-      let displaySize = window.screen.height;
-      let scrollPosition = window.scrollY;
+    function scroll() {
+      window.addEventListener("scroll", throttle( () => {
+        if (window.scrollY > 200) {
+          goUp.classList.remove("unvisible");
+        } else {
+          goUp.classList.add("unvisible");
+        }
 
-      if (scrollPosition + displaySize > pageSize - 20) add(); 
-    });
+        let pageSize = document.body.getBoundingClientRect().height;
+        let displaySize = window.screen.height;
+        let scrollPosition = window.scrollY;
+
+        if (scrollPosition + displaySize > pageSize - 20) add(); 
+      }, 250)); 
+    }
 
 
     wrapper.onclick= () => {
       audioCheck();
       for (let i = 0; i <= document.getElementsByClassName("card").length; i++) {
-        if (event.target.closest("div").id == "id" + i || event.target.id === "id" + i) {
+        if (event.target.closest("div").id == "id" + i) {
           let idCharacter = document.getElementsByClassName("card")[i-1];
           showCharacter(idCharacter.id.slice(2, idCharacter.id.length), idCharacter.getBoundingClientRect().top, idCharacter.getBoundingClientRect().left, idCharacter.getBoundingClientRect().width);
         }
