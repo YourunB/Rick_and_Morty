@@ -113,7 +113,7 @@
     
 
     function add() {
-      if (checkResult === 0) return;
+      checkResult = 0;
       if (page <= maxPage) {
         create(page);
         page = page + 1;
@@ -136,7 +136,6 @@
 
  
     function create(page) {
-      checkResult = 0;
       request.open('GET', 'https://rickandmortyapi.com/api/character/?page=' + page, true);
 
       request.onload = function () {
@@ -157,9 +156,9 @@
 
           //console.log(data.results[i].id);
         }
+        checkResult = 1;
       }
       request.send();
-      checkResult = 1;
     }
 
 
