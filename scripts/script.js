@@ -15,8 +15,8 @@
     let changeLoad = document.getElementById("changeLoad");
     let btnMusic = document.getElementById("btnMusic");
     let eye = document.getElementsByClassName("eye")[0];
+    let checkResult = 1;
     let request = new XMLHttpRequest();
-    request.open('GET', 'https://rickandmortyapi.com/api', true);
 
     let anim = {
       delay: 100,
@@ -32,9 +32,10 @@
     eye.addEventListener("click", ()=>{
       eye.classList.add("unvisible");
       loading();
-      setInterval( () => {
-        add();
-      },250);
+      let intervalId = setInterval( () => {
+        if (checkResult === 1) add();
+        if (page > maxPage) clearInterval(intervalId);
+      },100);
     });
 
     let logo = document.getElementsByClassName("logo")[0];
@@ -94,9 +95,10 @@
           document.getElementsByClassName("rick")[0].classList.add("unvisible");
           document.getElementsByClassName("morty")[0].classList.add("unvisible");
           loading();
-          setInterval( () => {
-            add();
-          },250);
+          let intervalId = setInterval( () => {
+            if (checkResult === 1) add();
+            if (page > maxPage) clearInterval(intervalId);
+          },100);
           scroll();
         });
 
@@ -111,6 +113,7 @@
     
 
     function add() {
+      if (checkResult === 0) return;
       if (page <= maxPage) {
         create(page);
         page = page + 1;
@@ -133,6 +136,7 @@
 
  
     function create(page) {
+      checkResult = 0;
       request.open('GET', 'https://rickandmortyapi.com/api/character/?page=' + page, true);
 
       request.onload = function () {
@@ -155,6 +159,7 @@
         }
       }
       request.send();
+      checkResult = 1;
     }
 
 
