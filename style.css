@@ -14,7 +14,7 @@ body {
 }
 
 .back-img {
-  background: url('assets/img/bcg1.jpg') no-repeat center;
+  background: url('assets/img/bcg1.png') no-repeat center;
   background-size: 50vh; 
   background-attachment: fixed; 
 }
@@ -337,8 +337,14 @@ body {
   max-width: 1000px;
   width: 100%;
   cursor: pointer;
+  transition: 1s;
   animation: grows 3s;
 }
+
+  .logo:hover {
+    transform: scale(0.9);
+    filter: invert(1);
+  }
 
 .load {
   max-width: 400px;
