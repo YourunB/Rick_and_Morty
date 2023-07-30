@@ -15,6 +15,8 @@
     let changeLoad = document.getElementById("changeLoad");
     let btnMusic = document.getElementById("btnMusic");
     let eye = document.getElementsByClassName("eye")[0];
+    let request = new XMLHttpRequest();
+    request.open('GET', 'https://rickandmortyapi.com/api', true);
 
     let anim = {
       delay: 100,
@@ -32,7 +34,7 @@
       loading();
       setInterval( () => {
         add();
-      },100);
+      },250);
     });
 
     let logo = document.getElementsByClassName("logo")[0];
@@ -94,11 +96,11 @@
           loading();
           setInterval( () => {
             add();
-          },100);
+          },250);
           scroll();
         });
 
-      }, 1000); //15000
+      }, 15000);
     });
 
     
@@ -118,7 +120,7 @@
             document.getElementsByClassName("load")[0].classList.add("unvisible");
           }, 2000);
 
-          let cards = document.getElementsByClassName("card");
+          let cards = wrapper.getElementsByClassName("card");
           for (let i = 0; i < cards.length; i++) { 
             cards[i].classList.remove("animation");
             cards[i].classList.add("reveal"); 
@@ -131,7 +133,6 @@
 
  
     function create(page) {
-      let request = new XMLHttpRequest();
       request.open('GET', 'https://rickandmortyapi.com/api/character/?page=' + page, true);
 
       request.onload = function () {
@@ -139,16 +140,16 @@
 
         for (let i = 0; i < data.results.length; i++) {
           wrapper.append(document.createElement("div"));
-          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].id = "id" + data.results[i].id;
-          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].classList = "card";
-          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].classList.add("animation");
+          wrapper.getElementsByTagName("div")[wrapper.getElementsByTagName("div").length - 1].id = "id" + data.results[i].id;
+          wrapper.getElementsByTagName("div")[wrapper.getElementsByTagName("div").length - 1].classList = "card";
+          wrapper.getElementsByTagName("div")[wrapper.getElementsByTagName("div").length - 1].classList.add("animation");
 
-          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].append(document.createElement("img"));
-          document.getElementsByTagName("img")[document.getElementsByTagName("img").length - 1].src = data.results[i].image;
-          document.getElementsByTagName("img")[document.getElementsByTagName("img").length - 1].alt = "character image";
+          wrapper.getElementsByTagName("div")[wrapper.getElementsByTagName("div").length - 1].append(document.createElement("img"));
+          wrapper.getElementsByTagName("img")[wrapper.getElementsByTagName("img").length - 1].src = data.results[i].image;
+          wrapper.getElementsByTagName("img")[wrapper.getElementsByTagName("img").length - 1].alt = "character image";
 
-          document.getElementsByTagName("div")[document.getElementsByTagName("div").length - 1].append(document.createElement("h3"));
-          document.getElementsByTagName("h3")[document.getElementsByTagName("h3").length - 1].textContent = data.results[i].name;
+          wrapper.getElementsByTagName("div")[wrapper.getElementsByTagName("div").length - 1].append(document.createElement("h3"));
+          wrapper.getElementsByTagName("h3")[wrapper.getElementsByTagName("h3").length - 1].textContent = data.results[i].name;
 
           //console.log(data.results[i].id);
         }
@@ -158,7 +159,6 @@
 
 
     function showCharacter(id, posY, posX, elWidth) {
-      let request = new XMLHttpRequest();
       request.open('GET', 'https://rickandmortyapi.com/api/character/' + id, true);
       
       request.onload = function () {
