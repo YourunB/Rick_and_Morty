@@ -68,16 +68,6 @@
         document.getElementsByClassName("morty")[0].classList.remove("unvisible");
       }, 1000);
 
-      let intervalChangeRickMortyId1 = setInterval(() => {
-        document.getElementsByClassName("rick")[0].src = "assets/img/rick2.png";
-        document.getElementsByClassName("morty")[0].src = "assets/img/morty2.png";
-      }, 1000); 
-
-      let intervalChangeRickMortyId2 = setInterval(() => {
-        document.getElementsByClassName("rick")[0].src = "assets/img/rick.png";
-        document.getElementsByClassName("morty")[0].src = "assets/img/morty.png";
-      }, 2000); 
-
       setTimeout(()=> {
         document.getElementsByClassName("dance")[0].classList.add("unvisible");
         changeLoad.classList.remove("unvisible")
@@ -89,8 +79,6 @@
         btnAll.addEventListener("mouseover", () => { document.getElementById('changeMenu').play(); });
 
         btn20.addEventListener("click", () => {
-          clearInterval(intervalChangeRickMortyId1);
-          clearInterval(intervalChangeRickMortyId2);
           changeLoad.classList.add("unvisible")
           wrapper.classList.remove("unvisible");
           document.getElementById('music').play();
@@ -103,8 +91,6 @@
         });
 
         btnAll.addEventListener("click", () => {
-          clearInterval(intervalChangeRickMortyId1);
-          clearInterval(intervalChangeRickMortyId2);
           changeLoad.classList.add("unvisible")
           wrapper.classList.remove("unvisible");
           document.getElementById('music').play();
