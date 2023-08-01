@@ -73,7 +73,7 @@ function errorConnection() {
   let height = 250;
   let rotate = 0;
 
-  if (document.body.getBoundingClientRect().width <= 800) {
+  function changeSizes() {
     blockWidth = 310;
     blockHeight = 310;
     width = 90;
@@ -82,17 +82,22 @@ function errorConnection() {
     speedY = 1;
   }
 
+  if (document.body.getBoundingClientRect().width <= 800) changeSizes();
+
   let intervalId = setInterval(move, 30);
+  let requestID;
 
   window.addEventListener("resize", throttle( () => {
     clearInterval(intervalId);
+    cancelAnimationFrame(requestID);
+    if (document.body.getBoundingClientRect().width <= 800) changeSizes();
     posX = 50;
     posY = 20;
     intervalId = setInterval(move, 30);
   }, 250)); 
 
   function move() {
-    let requestID = requestAnimationFrame(move);
+    requestID = requestAnimationFrame(move);
     
     posX -= speedX;
     rotate = rotate + 1;
