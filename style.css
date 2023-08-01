@@ -20,6 +20,7 @@ body {
   top: 0;
   background: white;
   width: 100%;
+  min-height: 802px;
   height: 100vh;
   animation: show 1s;
 }
@@ -544,6 +545,11 @@ body {
 }
 
 @media (max-width: 800px) {
+
+  .blocked {
+    min-height: 312px;
+  }
+
   .blocked__block {
     width: 310px;
     height: 310px;
