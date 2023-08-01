@@ -48,12 +48,10 @@ function errorConnection() {
   wrapper.classList.add("unvisible");
   
   let failSong = document.getElementById("failSong");
-  let disconectSong = document.getElementById("disconectSong");
   let boomSong = document.getElementById("boomSong");
   let rick = document.getElementById("rickAinim");
 
   failSong.play();
-  setTimeout(() => { disconectSong.play(); }, 1200);
 
   function getRandomColor() {
     let letters = '0123456789ABCDEF';
