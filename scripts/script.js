@@ -44,6 +44,7 @@ function checkPages() {
 function errorConnection() {
   document.getElementsByClassName("blocked")[0].classList.remove("unvisible");
   document.getElementById("music").pause();
+  document.getElementById("promo").pause();
   wrapper.classList.add("unvisible");
   
   let failSong = document.getElementById("failSong");
@@ -146,10 +147,10 @@ eye.addEventListener("click", ()=>{
 
 let logo = document.getElementsByClassName("logo")[0];
 logo.addEventListener("click", () => {
+  checkPages();
   logo.classList.add("unvisible");
   document.getElementById('tsss').play();
   document.getElementsByClassName("face")[0].classList.remove("unvisible");
-  checkPages();
 });
 
 document.getElementsByTagName("img")[5].addEventListener("mouseover", () => {
